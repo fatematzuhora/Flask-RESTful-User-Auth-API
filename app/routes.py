@@ -17,6 +17,7 @@ from flask_jwt_extended import (
 
 from config import Config
 import hashlib
+from blacklist import BLACKLIST
 
 
 # method to generate hash_password
@@ -37,7 +38,7 @@ USER_NOT_FOUND = "User not found."
 USER_DELETED = "User deleted."
 INVALID_CREDENTIALS = "Invalid credentials!"
 UNAUTHORIZED_ACCESS = "Unauthorized access!"
-USER_LOGGED_OUT = "User <username={username}> successfully logged out."
+USER_LOGGED_OUT = "User {} successfully logged out."
 NOT_CONFIRMED_ERROR = "Your account have not confirmed yet!"
 FAILED_TO_CREATE = "Internal server error. Failed to create user."
 FAILED_TO_ACCESS = "Internal server error. Unable to get data."
@@ -287,3 +288,37 @@ def activate_account():
                 return {'message': FAILED_TO_ACCESS}, 500
 
         return {'message': USER_NOT_FOUND}, 404
+
+
+# endpoint to REFRESH_TOKEN
+@app.route("/user/refresh-token/", methods=["GET"])
+@jwt_refresh_token_required
+def refresh_token():
+    current_user = get_jwt_identity()
+    if current_user:
+        try:
+            new_token = create_access_token(identity=current_user, fresh=False)
+            return {'access_token': new_token}, 200
+        except:
+            traceback.print_exc()
+            return {'message': FAILED_TO_ACCESS}, 500
+
+    return {'message': UNAUTHORIZED_ACCESS}, 401
+
+
+# endpoint to LOGOUT
+@app.route("/user/logout/", methods=["GET"])
+@jwt_required
+def logout():
+    jti = get_raw_jwt()["jti"]
+    current_user = get_jwt_identity()
+    if current_user:
+        try:
+            user = User.find_by_id(current_user)
+            BLACKLIST.add(jti)
+            return {'message': USER_LOGGED_OUT.format(user.username)}, 200
+        except:
+            traceback.print_exc()
+            return {'message': FAILED_TO_ACCESS}, 500
+
+    return {'message': UNAUTHORIZED_ACCESS}, 401
