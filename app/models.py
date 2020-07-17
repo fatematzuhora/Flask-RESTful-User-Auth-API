@@ -36,3 +36,27 @@ class User(db.Model):
         self.username = username
         self.mobile = mobile
         self.password = password
+
+    @classmethod
+    def find_by_id(cls, _id:str) -> "User":
+        return cls.query.filter_by(uuid = _id).first()
+    
+    @classmethod
+    def find_by_username(cls, _username:str) -> "User":
+        return cls.query.filter_by(username = _username).first()
+    
+    @classmethod
+    def find_by_mobile(cls, _mobile:str) -> "User":
+        return cls.query.filter_by(mobile = _mobile).first()
+    
+    @classmethod
+    def find_by_email(cls, _email:str) -> "User":
+        return cls.query.filter_by(email = _email).first()
+    
+    def save(self) -> None:
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
