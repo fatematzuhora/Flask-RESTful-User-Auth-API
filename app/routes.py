@@ -221,6 +221,8 @@ def update_user(uuid):
 
                 if 'gender' in request.json:
                     user.gender = request.json['gender']
+                if 'status' in request.json:
+                    user.status = request.json['status']
 
                 User.save(user)
                 result = user_schema.dump(user)

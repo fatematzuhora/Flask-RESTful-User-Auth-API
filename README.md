@@ -96,11 +96,11 @@ POST /user
 ```
 
 **Parameters**
-Name|Type|Description
-:-:|:-:|:-:
-`username`|`string`|user name
-`mobile`|`string`|user mobile number
-`password`|`string`|user password
+Name|Type|Description|Required
+:-:|:-:|:-:|:-:
+`username`|`string`|user name|`True`
+`mobile`|`string`|user mobile number|`True`
+`password`|`string`|user password|`True`
 
 **Request Body**
 ```
@@ -133,9 +133,9 @@ POST /user/activate-account/
 ```
 
 **Parameters**
-Name|Type|Description
-:-:|:-:|:-:
-`mobile`|`string`|user mobile number
+Name|Type|Description|Required
+:-:|:-:|:-:|:-:
+`mobile`|`string`|user mobile number|`True`
 
 **Request Body**
 ```
@@ -166,10 +166,10 @@ POST /user/login
 ```
 
 **Parameters**
-Name|Type|Description
-:-:|:-:|:-:
-`username`|`string`|user name
-`password`|`string`|user password
+Name|Type|Description|Required
+:-:|:-:|:-:|:-:
+`username`|`string`|user name|`True`
+`password`|`string`|user password|`True`
 
 **Request Body**
 ```
@@ -293,12 +293,13 @@ PATCH /user/:uuid
 ```
 
 **Parameters**
-Name|Type|Description
-:-:|:-:|:-:
-`username`|`string`|user name
-`email`|`string`|user email address
-`mobile`|`string`|user mobile number
-`gender`|`string`|Male / Female
+Name|Type|Description|Required
+:-:|:-:|:-:|:-:
+`username`|`string`|user name|`False`
+`email`|`string`|user email address|`False`
+`mobile`|`string`|user mobile number|`False`
+`gender`|`string`|Male / Female|`False`
+`status`|`boolean`|user status|`False`
 
 #### 9. Change Password
 
@@ -313,10 +314,10 @@ POST /user/change-password/:uuid
 ```
 
 **Parameters**
-Name|Type|Description
-:-:|:-:|:-:
-`old_password`|`string`|user old password
-`new_password`|`string`|user new password
+Name|Type|Description|Required
+:-:|:-:|:-:|:-:
+`old_password`|`string`|user old password|`True`
+`new_password`|`string`|user new password|`True`
 
 **Request Body**
 ```
