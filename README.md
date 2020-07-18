@@ -267,18 +267,13 @@ GET /user
 ```
 {
     "data": [
-    {
-        "mobile": "01XXXXXXXXX",
-        "status": false,
-        "username": "samantha",
-        "uuid": "c31adcb1-5811-49a0-bdbf-15f419afd024"
-    },
-    {
-        "mobile": "01XXXXXXXXX",
-        "status": true,
-        "username": "fatematzuhora",
-        "uuid": "f99f6337-fde1-4f5c-990f-f3597b56770d"
-    }
+        {
+            "mobile": "01XXXXXXXXX",
+            "status": true,
+            "username": "fatematzuhora",
+            "uuid": "f99f6337-fde1-4f5c-990f-f3597b56770d"
+        },
+        ....
     ],
     "message": "Success!",
     "status": 200
