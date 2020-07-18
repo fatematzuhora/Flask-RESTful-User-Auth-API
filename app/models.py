@@ -1,5 +1,6 @@
 from app import db
 
+from sqlalchemy_utils import ChoiceType
 from uuid import uuid4
 import datetime
 
@@ -17,15 +18,21 @@ model classes
 # See http://flask-sqlalchemy.pocoo.org/2.0/models/#simple-example
 # for details on the column types.
 
+# user model class
 class User(db.Model):
     __tablename__ = "users"
+
+    GENDER_TYPES = [
+       ('male', 'Male'),
+       ('female', 'Female')
+    ]
 
     uuid = db.Column(db.String(255), nullable=False, unique=True, default=generate_uuid, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True)
     mobile = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    gender = db.Column(db.String(10))
+    gender = db.Column(db.String(6), ChoiceType(GENDER_TYPES, impl=db.String()))
     status = db.Column(db.Boolean(), nullable=False, default=False)
     
     created = db.Column(db.DateTime(timezone=True), default=db.func.current_timestamp(), nullable=False)

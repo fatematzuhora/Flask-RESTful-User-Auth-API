@@ -42,7 +42,7 @@ SQLALCHEMY_TRACK_MODIFICATIONS=FALSE
 SALT_KEY="TEST_SALT_KEY"
 ```
 
-* Update `SQLALCHEMY_DATABASE_URI` at the .env file according to your MySQL database information
+* Update `SQLALCHEMY_DATABASE_URI` at the `.env` file according to your MySQL database information
 
 
 ## Running the App
@@ -174,15 +174,186 @@ Name|Type|Description
 **Request Body**
 ```
 {
-	"username": "fatematzuhora",
-	"password": "password"
+    "username": "fatematzuhora",
+    "password": "password"
 }
 ```
 
 **Response**
 ```
 {
-  "access_token": "eyJ0eXAiOi....",
-  "refresh_token": "eyJ0eXAiOi...."
+    "access_token": "eyJ0eXAiOi....",
+    "refresh_token": "eyJ0eXAiOi...."
+}
+```
+
+#### 4. Token Refresh
+
+**Request**
+```
+GET /user/refresh-token/
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_REFRESH_TOKEN'
+```
+
+**Response**
+```
+{
+    "access_token": "eyJ0eXAiOi...."
+}
+```
+
+#### 5. Logout
+
+**Request**
+```
+GET /user/logout/
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Response**
+```
+{
+    "message": "User fatematzuhora successfully logged out."
+}
+```
+
+#### 6. Get User Detail
+
+**Request**
+```
+GET /user/:uuid
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Response**
+```
+{
+    "data": {
+        "mobile": "01XXXXXXXXX",
+        "status": true,
+        "username": "fatematzuhora",
+        "uuid": "f99f6337-fde1-4f5c-990f-f3597b56770d"
+    },
+    "message": "Success!",
+    "status": 200
+}
+```
+
+#### 7. Get User List
+
+**Request**
+```
+GET /user
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Response**
+```
+{
+    "data": [
+    {
+        "mobile": "01XXXXXXXXX",
+        "status": false,
+        "username": "samantha",
+        "uuid": "c31adcb1-5811-49a0-bdbf-15f419afd024"
+    },
+    {
+        "mobile": "01XXXXXXXXX",
+        "status": true,
+        "username": "fatematzuhora",
+        "uuid": "f99f6337-fde1-4f5c-990f-f3597b56770d"
+    }
+    ],
+    "message": "Success!",
+    "status": 200
+}
+```
+
+#### 8. Update User
+
+**Request**
+```
+PATCH /user/:uuid
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Parameters**
+Name|Type|Description
+:-:|:-:|:-:
+`username`|`string`|user name
+`email`|`string`|user email address
+`mobile`|`string`|user mobile number
+`gender`|`string`|Male / Female
+
+#### 9. Change Password
+
+**Request**
+```
+POST /user/change-password/:uuid
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Parameters**
+Name|Type|Description
+:-:|:-:|:-:
+`old_password`|`string`|user old password
+`new_password`|`string`|user new password
+
+**Request Body**
+```
+{
+    "old_password": "password",
+    "new_password": "password01"
+}
+```
+
+**Response**
+```
+{
+    "message": "Success!"
+}
+```
+
+#### 9. Delete User
+
+**Request**
+```
+DELETE /user/:uuid
+```
+
+**Request Header**
+```
+'Authorization': 'Bearer THE_ACCESS_TOKEN'
+```
+
+**Response**
+```
+{
+    "message": "User deleted.",
+    "status": 200
 }
 ```
